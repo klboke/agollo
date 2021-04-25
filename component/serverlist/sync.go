@@ -41,6 +41,7 @@ func init() {
 
 //InitSyncServerIPList 初始化同步服务器信息列表
 func InitSyncServerIPList(appConfig func() config.AppConfig) {
+	SyncServerIPList(appConfig)
 	go component.StartRefreshConfig(&SyncServerIPListComponent{appConfig})
 }
 
@@ -52,9 +53,7 @@ type SyncServerIPListComponent struct {
 
 //Start 启动同步服务器列表
 func (s *SyncServerIPListComponent) Start() {
-	SyncServerIPList(s.appConfig)
 	log.Debug("syncServerIpList started")
-
 	t2 := time.NewTimer(refreshIPListInterval)
 	for {
 		select {

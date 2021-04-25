@@ -102,7 +102,10 @@ func IsConnectDirectly(configIp string) bool {
 	if s == nil || len(s.serverMap) == 0 {
 		return false
 	}
-	if s.nextTryConnTime >= 0 && s.nextTryConnTime > time.Now().Unix() {
+	if s.nextTryConnTime == 0 {
+		return true
+	}
+	if s.nextTryConnTime > 0 && s.nextTryConnTime > time.Now().Unix() {
 		return true
 	}
 
